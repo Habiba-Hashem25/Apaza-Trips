@@ -134,8 +134,14 @@ function App() {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]:
+        name === "tripDate"
+          ? new Date(value).toISOString().split("T")[0] // ✅ توحيد تنسيق التاريخ
+          : type === "checkbox"
+            ? checked
+            : value,
     }));
+
   };
 
   const handleTripTypeChange = (value) => {
@@ -313,8 +319,8 @@ function App() {
         trip.tripType === "nile"
           ? "رحلة نيلية"
           : trip.tripType === "drink"
-          ? "مشروبات"
-          : "طعام ومشروبات",
+            ? "مشروبات"
+            : "طعام ومشروبات",
       "اسم المطعم":
         Array.isArray(trip.restaurantName) && trip.restaurantName.length > 0
           ? trip.restaurantName.join(" ، ")
@@ -682,8 +688,8 @@ function App() {
                         {trip.tripType === "nile"
                           ? "رحلة نيلية"
                           : trip.tripType === "drink"
-                          ? "مشروبات"
-                          : "طعام ومشروبات"}
+                            ? "مشروبات"
+                            : "طعام ومشروبات"}
                       </p>
                       {trip.restaurantName?.length > 0 && (
                         <p>🍽️ المطعم: {trip.restaurantName.join(" ، ")}</p>
